@@ -23,7 +23,7 @@ describe GamesRadarApi::Client::Games do
   describe 'Game Detail' do
     it 'should fetch the correct game' do
       response = @client.game('16725')
-      response.name.uk.must_equal 'God of War Saga'
+      response.name.must_equal 'God of War Saga'
     end
 
     it 'should return nil for an invalid game' do
@@ -31,6 +31,27 @@ describe GamesRadarApi::Client::Games do
       response.must_be_nil
     end
 
+    describe "with response.release_date equal nil" do
+      it "should return nil of field release_date" do
+        response = @client.game('894')
+        response.release_date.must_be_nil
+      end
+    end
+
+    it "should return name of platform" do
+      response = @client.game('16725')
+      response.platform.must_equal('PS3')
+    end
+
+    it "should return name of genre" do
+      response = @client.game('16725')
+      response.genre.must_equal("Action")
+    end
+
+    it "should return name of esrb" do
+      response = @client.game('16725')
+      response.esrb.must_equal("Mature")
+    end
   end
 
   describe 'Game Search' do
@@ -45,8 +66,6 @@ describe GamesRadarApi::Client::Games do
       response = @client.game_search('Darksdiers','xbox360')
       response.must_be_nil
     end
-
-
   end
 
 end
